@@ -1,0 +1,8 @@
+.DS_Store
+.devcontainer
+
+/build/
+
+sdkconfig
+sdkconfig.ci
+dependencies.lock
