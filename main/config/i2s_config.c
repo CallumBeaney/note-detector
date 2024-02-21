@@ -1,4 +1,4 @@
-#include "i2s_config.h"
+#include "i2s_config.h" // see RE: I2S API migration
 
 i2s_port_t I2S_MIC_PORT = I2S_NUM_0;
 

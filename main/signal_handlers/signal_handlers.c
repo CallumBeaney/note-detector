@@ -2,6 +2,8 @@
 
 // static const char *TAG = "Signal Handlers";
 
+
+/// TODO: convert to kissfftr when have time
 kiss_fft_cpx* sig_applyFourierTransform(int16_t* sampleVector, int numSamples) 
 {
   kiss_fft_cfg cfg = kiss_fft_alloc(numSamples, 0, NULL, NULL);

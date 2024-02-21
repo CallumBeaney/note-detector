@@ -8,15 +8,20 @@
 #include <stdbool.h>
 
 
-const char* note_parseNote(int frequency);
+void note_parseNote(char* buffer, int buffLen, int frequency);
+
 
 typedef struct Note {
     double frequency;
     const char *name;
 } Note;
 
+#define MUSICAL_NOTES_LEN 99 // hardcoded to reduce calculations. Don't mess with the struct array!
 
-static Note MusicalNotes[] = {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
+static Note MUSICAL_NOTES[] = {
   {16.35, "C0"},
   {17.32, "C#0/Db0"},
   {18.35, "D0"},
@@ -118,6 +123,8 @@ static Note MusicalNotes[] = {
   {4698.64, "D8"},
   {4978.03, "D#8/Eb8"},
 };
+
+#pragma GCC diagnostic pop
 
 
 #endif

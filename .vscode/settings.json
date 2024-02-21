@@ -72,6 +72,9 @@
     "stdio.h": "c",
     "freertos.h": "c",
     "esp_log.h": "c",
-    "notes.h": "c"
-  }
+    "notes.h": "c",
+    "esp_err.h": "c",
+    "kiss_fft.h": "c"
+  },
+  "idf.flashType": "JTAG"
 }

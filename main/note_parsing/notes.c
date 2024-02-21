@@ -1,33 +1,49 @@
 #include "notes.h"
+#include "esp_log.h"
 
-static Note nearestNoteToFrequency(int foi, Note* MusicalNotes, int arrLen);
+
+static Note nearestNoteToFrequency(int foi, Note* Notes, int arrLen);
+
+const char* TAG = "NOTES";
 
 
-const char* note_parseNote(int frequency) 
+void note_parseNote(char* buffer, int buffLen, int frequency) 
 {
-  int musicalNotesLen = (sizeof(MusicalNotes) / sizeof(MusicalNotes[0]));
+  ESP_LOGI(TAG, "MAX FREQ: %f", MUSICAL_NOTES[MUSICAL_NOTES_LEN].frequency);
 
   int thisNote = frequency;
-  if (thisNote < MusicalNotes[0].frequency || thisNote > MusicalNotes[musicalNotesLen].frequency) return NULL;
 
-  int buffLen = 100;
-  char* buffer = malloc(sizeof(char) * buffLen);
+  if (thisNote < MUSICAL_NOTES[0].frequency) {
+    snprintf(buffer, buffLen, "NO FREQUENCY DETECTED");
+    return;
+  }
 
+  int maxFreq = MUSICAL_NOTES[MUSICAL_NOTES_LEN].frequency;
 
-  Note nearestNote = nearestNoteToFrequency(thisNote, MusicalNotes, musicalNotesLen);
+  if (thisNote > maxFreq) {
+    snprintf(buffer, buffLen, "MAX FREQUENCY: %d", maxFreq);
+    return;
+  }
 
-  int difference = (int)fabs(thisNote - nearestNote.frequency);
-  bool greaterOrLower = thisNote > nearestNote.frequency ? true : false; 
+  Note note = nearestNoteToFrequency(thisNote, MUSICAL_NOTES, MUSICAL_NOTES_LEN);
+  if (note.name == NULL || note.frequency == 0) {
+    snprintf(buffer, buffLen, "NO FREQUENCY DETECTED");
+    ESP_LOGE(TAG, "nearestNoteToFrequency returned empty Note struct");
+  }
 
-  snprintf(buffer, buffLen, "%d : %s ( %s%d Hz)\n", frequency, nearestNote.name, greaterOrLower ? "+" : "-", difference);
-  return buffer;
+  int difference = (int)fabs(thisNote - note.frequency);
+  bool greaterOrLower = thisNote > note.frequency ? true : false; 
+  
+  snprintf(buffer, buffLen, "%d : %s ( %s%d Hz)\n", frequency, note.name, greaterOrLower ? "+" : "-", difference);
+
+  return;
 }
 
 
-static Note nearestNoteToFrequency(int foi, Note* notes, int arrLen) 
+static Note nearestNoteToFrequency(int foi, Note* notes, int notesLen) 
 {   
   Note nearestFreq = {0, NULL};
-  for (int i = 0; i < arrLen; i++) {
+  for (int i = 0; i < notesLen; i++) {
     if (notes[i].frequency == (float) foi) return notes[i];
     if (fabs(foi - notes[i].frequency)  <  fabs(foi - nearestFreq.frequency)) {
       nearestFreq = notes[i];

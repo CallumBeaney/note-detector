@@ -3,7 +3,6 @@
 
 #include "esp_log.h"
 #include "esp_err.h"
-#include "classes.h"
 #include "../kissfft/kiss_fft.h"
 
 /// If you arn't downsampling or just getting a single read from your mic, your numSamples will be e.g. BUFFER_OF_BUFFERS_LENGTH
