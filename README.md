@@ -1,6 +1,7 @@
-TODO: pitch estimation, see: https://stackoverflow.com/a/34824467/18022338
-TODO: OLED screen
-TODO: multi-read buffer
+TODO: check:  https://github.com/ashokfernandez/Yin-Pitch-Tracking# 
+TODO: pitch estimation, see: https://stackoverflow.com/a/34824467/18022338  
+TODO: OLED screen  
+TODO: multi-read buffer  
 
 This is an ESP-IDF project, for an ESP32-S3. It takes in mic audio and processes it, and prints the nearest note played
 
